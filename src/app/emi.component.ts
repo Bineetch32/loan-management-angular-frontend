@@ -1,0 +1,3 @@
+import {Component} from '@angular/core';import {FormsModule} from '@angular/forms';import {CommonModule} from '@angular/common';import {LoanService} from './loan.service';import {EmiResponse} from './models';
+@Component({selector:'app-emi',standalone:true,imports:[FormsModule,CommonModule],templateUrl:'./emi.component.html'})
+export class EmiComponent{amount=5000000;rate=8.5;years=12;result:EmiResponse|null=null;constructor(private service:LoanService){}calculate(){this.service.emi({loanAmount:this.amount,annualInterestRate:this.rate,tenureInYears:this.years}).subscribe(x=>this.result=x)}}
