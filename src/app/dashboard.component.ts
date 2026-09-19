@@ -1,0 +1,3 @@
+import {Component,OnInit} from '@angular/core';import {CommonModule} from '@angular/common';import {RouterLink} from '@angular/router';import {LoanService} from './loan.service';import {Loan} from './models';
+@Component({selector:'app-dashboard',standalone:true,imports:[CommonModule,RouterLink],templateUrl:'./dashboard.component.html',styleUrls:['./dashboard.component.css']})
+export class DashboardComponent implements OnInit{loans:Loan[]=[];loading=true;constructor(private service:LoanService){}ngOnInit(){this.service.getLoans().subscribe({next:x=>{this.loans=x;this.loading=false},error:()=>this.loading=false})}count(status:string){return this.loans.filter(x=>x.status===status).length}}
