@@ -1,0 +1,39 @@
+<div class="container">
+  <a routerLink="/loans" class="back">← Back to Loans</a>
+
+  <div *ngIf="loading" class="card loading">Loading loan details...</div>
+  <div *ngIf="errorMessage && !loan" class="card error">{{errorMessage}}</div>
+
+  <div *ngIf="loan" class="card details-card">
+    <div class="title-row">
+      <div>
+        <h1>Loan Details</h1>
+        <p>Application #{{loan.id}} · {{loan.customerName}}</p>
+      </div>
+      <span class="status" [class.pending]="loan.status==='PENDING'" [class.approved]="loan.status==='APPROVED'" [class.rejected]="loan.status==='REJECTED'" [class.sanctioned]="loan.status==='SANCTIONED'">{{loan.status}}</span>
+    </div>
+
+    <div *ngIf="message" class="success">{{message}}</div>
+    <div *ngIf="errorMessage" class="error">{{errorMessage}}</div>
+
+    <div class="details-grid">
+      <div><span>Customer Name</span><strong>{{loan.customerName}}</strong></div>
+      <div><span>Loan Type</span><strong>{{loan.loanType}}</strong></div>
+      <div><span>Loan Amount</span><strong>₹ {{loan.loanAmount | number}}</strong></div>
+      <div><span>CIBIL Score</span><strong>{{loan.cibilScore}}</strong></div>
+      <div class="full"><span>Loan Purpose</span><strong>{{loan.loanPurpose}}</strong></div>
+    </div>
+
+    <div class="actions">
+      <a [routerLink]="['/loan/edit',loan.id]" class="btn light">Edit Loan</a>
+      <a [routerLink]="['/documents',loan.id]" class="btn light">Documents</a>
+
+      <button class="btn primary" *ngIf="loan.status==='PENDING'" (click)="approve()">Approve</button>
+      <button class="btn danger" *ngIf="loan.status==='PENDING'" (click)="reject()">Reject</button>
+      <button class="btn primary" *ngIf="loan.status==='APPROVED'" (click)="sanction()">Sanction Loan</button>
+
+      <button class="btn primary" *ngIf="loan.status==='SANCTIONED'" (click)="generateLetter()">Generate Sanction Letter</button>
+      <button class="btn light" *ngIf="loan.status==='SANCTIONED'" (click)="downloadLetter()">Download PDF</button>
+    </div>
+  </div>
+</div>
