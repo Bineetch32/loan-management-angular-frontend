@@ -1,1 +1,13 @@
-<div class="container"><div class="card form-card"><h1>{{id?'Edit Loan':'New Loan Application'}}</h1><p>Enter customer and loan details.</p><form (ngSubmit)="save()" #f="ngForm"><div class="grid grid2"><div><label>Customer Name</label><input class="input" [(ngModel)]="loan.customerName" name="customerName" required></div><div><label>Loan Type</label><select class="input" [(ngModel)]="loan.loanType" name="loanType" required><option *ngFor="let t of types" [value]="t">{{t}}</option></select></div><div><label>Loan Amount</label><input class="input" type="number" [(ngModel)]="loan.loanAmount" name="loanAmount" min="1" required></div><div><label>CIBIL Score</label><input class="input" type="number" [(ngModel)]="loan.cibilScore" name="cibilScore" min="300" max="900" required></div><div class="full"><label>Loan Purpose</label><input class="input" [(ngModel)]="loan.loanPurpose" name="loanPurpose" required></div><div *ngIf="!id"><label>Status</label><select class="input" [(ngModel)]="loan.status" name="status"><option *ngFor="let s of statuses" [value]="s">{{s}}</option></select></div></div><button class="btn primary" [disabled]="f.invalid">{{id?'Update Loan':'Submit Application'}}</button> <button type="button" class="btn light" (click)="router.navigate(['/loans'])">Cancel</button></form></div></div>
+<div class="container"><div class="card form-card"><h1>{{id?'Edit Loan':'New Loan Application'}}</h1><p>Enter customer and loan details.</p>
+<div *ngIf="errorMessage" style="margin:15px 0;padding:12px;border-radius:8px;background:#fee2e2;color:#b91c1c;border:1px solid #fecaca">{{errorMessage}}</div>
+<form (ngSubmit)="save()" #f="ngForm"><div class="grid grid2">
+<div><label>Customer Name</label><input class="input" [(ngModel)]="loan.customerName" name="customerName" required></div>
+<div><label>Loan Type</label><select class="input" [(ngModel)]="loan.loanType" name="loanType" required><option *ngFor="let t of types" [value]="t">{{t}}</option></select></div>
+<div><label>Loan Amount</label><input class="input" type="number" [(ngModel)]="loan.loanAmount" name="loanAmount" min="1" required></div>
+<div><label>CIBIL Score</label><input class="input" type="number" [(ngModel)]="loan.cibilScore" name="cibilScore" min="300" max="900" required></div>
+<div class="full"><label>Loan Purpose</label><input class="input" [(ngModel)]="loan.loanPurpose" name="loanPurpose" required></div>
+<div *ngIf="!id"><label>Status</label><select class="input" [(ngModel)]="loan.status" name="status"><option *ngFor="let s of statuses" [value]="s">{{s}}</option></select></div>
+</div>
+<button type="submit" class="btn primary" [disabled]="f.invalid || saving">{{saving?'Saving...':(id?'Update Loan':'Submit Application')}}</button>
+<button type="button" class="btn light" (click)="router.navigate(['/loans'])">Cancel</button>
+</form></div></div>
